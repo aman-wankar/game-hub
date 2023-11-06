@@ -36,8 +36,12 @@ const GenreList = ({ onSelecteGenre, selectedGenre }: Props) => {
               onClick={() => onSelecteGenre(genre)}
               fontSize='lg'
               variant='link'
+              display={'block'}
+              textOverflow={'ellipsis'}
             >
-              {genre.name}
+              {genre.name === 'Massively Multiplayer'
+                ? 'Massively Multip...'
+                : genre.name}
             </Button>
           </HStack>
         </ListItem>
