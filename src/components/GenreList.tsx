@@ -40,7 +40,7 @@ const GenreList = ({ onSelecteGenre, selectedGenre }: Props) => {
               textOverflow={'ellipsis'}
             >
               {genre.name === 'Massively Multiplayer'
-                ? 'Massively Multip...'
+                ? 'Multiplayer'
                 : genre.name}
             </Button>
           </HStack>
