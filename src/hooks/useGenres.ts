@@ -7,7 +7,7 @@ export interface Genre {
 }
 
 const useGenres = () => ({
-  data: genres.results,
+  data: genres,
   isLoading: false,
   error: null,
 });
