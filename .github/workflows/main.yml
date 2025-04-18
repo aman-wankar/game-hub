@@ -1,23 +1,24 @@
-name: Upload to GCS
-on: [push]
+name: List GCS Objects with WIF
+
+on:
+  workflow_dispatch: # Allows manual triggering from the GitHub UI
 
 permissions:
-  id-token: write
-  contents: read
+  id-token: write # Required for workload identity federation
 
 jobs:
-  upload:
+  list_objects:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Authenticate with GCP via WIF
-        id: auth
+      - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: "projects/578920165205/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
-          service_account: "github-actions-sa@your-gcp-project-id.iam.gserviceaccount.com"
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SA_EMAIL }}
 
-      - name: Upload file to GCS
-        run: gsutil cp index.html gs://github-actions-read-write-bucket/
+      - name: List GCS objects
+        run: |
+          gcloud storage ls gs://${{ secrets.GCS_BUCKET_NAME }}
