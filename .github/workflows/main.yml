@@ -1,28 +1,23 @@
-name: List GCS Objects with WIF
+name: Simple Metadata and Hello World
 
 on:
-  workflow_dispatch: # Allows manual triggering from the GitHub UI
-
-permissions:
-  id-token: write # Required for workload identity federation
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
-  list_objects:
+  simple-job:
     runs-on: ubuntu-latest
+
     steps:
-      # - name: Checkout code
-      #   uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      # - name: Authenticate to Google Cloud
-      #   uses: google-github-actions/auth@v2
-      #   with:
-      #     workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-      #     service_account: ${{ secrets.GCP_SA_EMAIL }}
-      #     audience: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-
-      - name: List GCS objects
+      - name: Print metadata and hello world
         run: |
-          echo ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-          echo ${{ secrets.GCP_SA_EMAIL }}
-          echo ${{ secrets.GCS_BUCKET_NAME }}
-          # gcloud storage ls gs://${{ secrets.GCS_BUCKET_NAME }}
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Branch: $GITHUB_REF"
+          echo "Commit SHA: $GITHUB_SHA"
+          echo "Actor: $GITHUB_ACTOR"
+          echo "Hello, World!"
